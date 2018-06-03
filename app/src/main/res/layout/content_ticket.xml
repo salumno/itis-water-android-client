@@ -8,4 +8,9 @@
     tools:context="ru.kpfu.itis.water.TicketActivity"
     tools:showIn="@layout/activity_ticket">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/ticketRecyclerView"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
+
 </android.support.constraint.ConstraintLayout>
