@@ -3,7 +3,6 @@ package ru.kpfu.itis.water
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.ticket_item.view.*
-import ru.kpfu.itis.water.api.inflate
 
 /**
  * Created by Melnikov Semyon on 03.06.18.
