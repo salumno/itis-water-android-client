@@ -17,4 +17,7 @@ interface ItisWaterApi {
 
     @GET("/client/tickets")
     fun getUserTickets(@Query("userId") userId: Long): Call<ItisWaterTicketResponse>
+
+    @POST("/client/tickets/message")
+    fun saveTicketMessage(@Body message: String): Call<List<ItisWaterTicketMessageDataResponse>>
 }

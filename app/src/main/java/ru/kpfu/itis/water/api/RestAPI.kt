@@ -22,9 +22,12 @@ class RestAPI {
         itisWaterApi = retrofit.create(ItisWaterApi::class.java)
     }
 
-    fun login(login: String, password: String) : Call<ItisWaterLoginResponse> =
+    fun login(login: String, password: String): Call<ItisWaterLoginResponse> =
             itisWaterApi.login(ItisWaterLoginRequest(login, password))
 
     fun getUserTickets(userId: Long): Call<ItisWaterTicketResponse> =
             itisWaterApi.getUserTickets(userId)
+
+    fun addTicketMessage(message: String): Call<List<ItisWaterTicketMessageDataResponse>> =
+            itisWaterApi.saveTicketMessage(message)
 }

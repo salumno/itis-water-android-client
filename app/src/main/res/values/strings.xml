@@ -7,4 +7,6 @@
     <string name="app_title">Mr.Lanshtain\'s Water Utility</string>
     <string name="title_activity_ticket">TicketActivity</string>
     <string name="title_activity_specific_ticket">SpecificTicketActivity</string>
+    <string name="send">Send</string>
+    <string name="type_your_message_here">Type your message here</string>
 </resources>

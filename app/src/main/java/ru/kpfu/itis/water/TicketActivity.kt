@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.content_ticket.*
 import ru.kpfu.itis.water.adapters.TicketAdapter
 import ru.kpfu.itis.water.managers.TicketManager
 import ru.kpfu.itis.water.model.ItisWaterTicketItem
+import rx.schedulers.Schedulers
 
 class TicketActivity : AppCompatActivity(), TicketAdapter.onTicketSelectedListener {
     companion object {
@@ -30,11 +31,6 @@ class TicketActivity : AppCompatActivity(), TicketAdapter.onTicketSelectedListen
         setContentView(R.layout.activity_ticket)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
-
         val userId: Long = savedInstanceState?.getLong(USER_ID_KEY) ?: getUserIdFromIntent()
 
         ticketList.apply {
@@ -53,14 +49,16 @@ class TicketActivity : AppCompatActivity(), TicketAdapter.onTicketSelectedListen
     }
 
     private fun requestTickets(userId: Long) {
-        ticketManager.getUserTickets(userId).subscribe(
-                { receivedTickets ->
-                    (ticketList.adapter as TicketAdapter).addTickets(receivedTickets)
-                },
-                { e ->
-                    Snackbar.make(ticketList, e.message ?: "" , Snackbar.LENGTH_LONG)
-                }
-        )
+        ticketManager.getUserTickets(userId)
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                    { receivedTickets ->
+                        (ticketList.adapter as TicketAdapter).addTickets(receivedTickets)
+                    },
+                    { e ->
+                        Snackbar.make(ticketList, e.message ?: "" , Snackbar.LENGTH_LONG)
+                    }
+                )
     }
 
     private fun initAdapter() {

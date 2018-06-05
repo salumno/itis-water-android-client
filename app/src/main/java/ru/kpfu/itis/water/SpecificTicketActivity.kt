@@ -4,16 +4,21 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-
 import kotlinx.android.synthetic.main.activity_specific_ticket.*
 import kotlinx.android.synthetic.main.content_specific_ticket.*
 import ru.kpfu.itis.water.adapters.TicketMessageAdapter
+import ru.kpfu.itis.water.managers.TicketMessageManager
 import ru.kpfu.itis.water.model.ItisWaterTicketItem
+import rx.schedulers.Schedulers
 
 class SpecificTicketActivity : AppCompatActivity() {
 
     companion object {
         const val TICKET_ITEM_KEY = "ticketItem"
+    }
+
+    private val ticketMessageManager by lazy {
+        TicketMessageManager()
     }
 
     private val messagesList by lazy {
@@ -25,16 +30,15 @@ class SpecificTicketActivity : AppCompatActivity() {
         setContentView(R.layout.activity_specific_ticket)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
-
         val ticket: ItisWaterTicketItem = intent.getParcelableExtra(TICKET_ITEM_KEY)
 
         messagesList.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
+        }
+
+        add_message_button.setOnClickListener {
+            handleNewMessageButton()
         }
 
         initAdapter()
@@ -53,6 +57,21 @@ class SpecificTicketActivity : AppCompatActivity() {
         specific_ticket_date.text = ticketItem.date
         specific_ticket_status.text = ticketItem.status
         (messagesList.adapter as TicketMessageAdapter).addMessages(ticketItem.messages)
+    }
+
+    private fun handleNewMessageButton() {
+        val message = new_message_edit_text.text.toString()
+        ticketMessageManager.addNewMessage(message)
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                        { receivedMessages ->
+                            (messagesList.adapter as TicketMessageAdapter).addMessages(receivedMessages)
+                            new_message_edit_text.setText("")
+                        },
+                        { e ->
+                            Snackbar.make(messagesList, e.message ?: "" , Snackbar.LENGTH_LONG)
+                        }
+                )
     }
 
 }
