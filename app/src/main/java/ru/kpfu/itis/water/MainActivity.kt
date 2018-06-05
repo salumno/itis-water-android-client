@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import ru.kpfu.itis.water.managers.LoginManager
 import rx.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package ru.kpfu.itis.water
+package ru.kpfu.itis.water.extensions
 
 import android.view.LayoutInflater
 import android.view.View

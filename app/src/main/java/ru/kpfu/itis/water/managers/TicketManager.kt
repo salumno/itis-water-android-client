@@ -1,6 +1,8 @@
-package ru.kpfu.itis.water
+package ru.kpfu.itis.water.managers
 
 import ru.kpfu.itis.water.api.RestAPI
+import ru.kpfu.itis.water.extensions.createIWTicketItemBy
+import ru.kpfu.itis.water.model.ItisWaterTicketItem
 import rx.Observable
 
 /**
@@ -15,13 +17,7 @@ class TicketManager(private val api: RestAPI = RestAPI()) {
             val response = callResponse.execute()
             if (response.isSuccessful) {
                 val tickets = response.body().data.map {
-                    val ticketResponse = it
-                    ItisWaterTicketItem(
-                            id = ticketResponse.id,
-                            text = ticketResponse.text,
-                            status = ticketResponse.status,
-                            date = ticketResponse.date
-                    )
+                    createIWTicketItemBy(it)
                 }
                 subscriber.onNext(tickets)
                 subscriber.onCompleted()
