@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.content_ticket.*
 class TicketActivity : AppCompatActivity() {
 
     companion object {
-        const val NEWS_ID_KEY = "userId"
+        const val USER_ID_KEY = "userId"
     }
 
     private val ticketManager by lazy {
@@ -31,14 +31,12 @@ class TicketActivity : AppCompatActivity() {
                     .setAction("Action", null).show()
         }
 
+        val userId: Long = savedInstanceState?.getLong(USER_ID_KEY) ?: getUserIdFromIntent()
         initAdapter()
-
-        if (savedInstanceState == null) {
-            //TODO
-        }
+        requestTickets(userId)
     }
 
-    fun requestTickets(userId: Long) {
+    private fun requestTickets(userId: Long) {
         ticketManager.getUserTickets(userId).subscribe(
                 { receivedTickets ->
                     (ticketList.adapter as TicketAdapter).addTickets(receivedTickets)
@@ -49,10 +47,16 @@ class TicketActivity : AppCompatActivity() {
         )
     }
 
-    fun initAdapter() {
+    private fun initAdapter() {
         if (ticketList.adapter == null) {
             ticketList.adapter = TicketAdapter()
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putLong(USER_ID_KEY, getUserIdFromIntent())
+    }
+
+    private fun getUserIdFromIntent() = intent.getLongExtra(USER_ID_KEY, -1)
 }

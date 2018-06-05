@@ -35,6 +35,7 @@ class TicketAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun addTickets(tickets: List<ItisWaterTicketItem>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        items.clear()
+        items.addAll(tickets)
     }
 }

@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 .subscribe(
                 { postLoginForm ->
                     val intent = Intent(this, TicketActivity::class.java)
-                    intent.putExtra(TicketActivity.NEWS_ID_KEY, postLoginForm.userId)
+                    intent.putExtra(TicketActivity.USER_ID_KEY, postLoginForm.userId)
                     startActivity(intent)
                 },
                 {
