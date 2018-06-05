@@ -1,4 +1,4 @@
-package ru.kpfu.itis.water
+package ru.kpfu.itis.water.managers
 
 import ru.kpfu.itis.water.api.PostLoginForm
 import ru.kpfu.itis.water.api.RestAPI

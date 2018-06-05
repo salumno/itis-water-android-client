@@ -6,4 +6,5 @@
     <string name="username">Username</string>
     <string name="app_title">Mr.Lanshtain\'s Water Utility</string>
     <string name="title_activity_ticket">TicketActivity</string>
+    <string name="title_activity_specific_ticket">SpecificTicketActivity</string>
 </resources>

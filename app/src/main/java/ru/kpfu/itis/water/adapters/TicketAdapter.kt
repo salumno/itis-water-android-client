@@ -1,14 +1,21 @@
-package ru.kpfu.itis.water
+package ru.kpfu.itis.water.adapters
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.ticket_item.view.*
+import ru.kpfu.itis.water.R
+import ru.kpfu.itis.water.extensions.inflate
+import ru.kpfu.itis.water.model.ItisWaterTicketItem
 
 /**
  * Created by Melnikov Semyon on 03.06.18.
  * Higher School ITIS KFU
  */
-class TicketAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class TicketAdapter(val ticketListenerImpl: onTicketSelectedListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    interface onTicketSelectedListener {
+        fun onTicketSelected(ticketItem: ItisWaterTicketItem)
+    }
 
     private var items : ArrayList<ItisWaterTicketItem> = ArrayList()
 
@@ -21,6 +28,9 @@ class TicketAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             text.text = item.text
             status.text = item.status
             date.text = item.date
+            itemView.setOnClickListener({
+                ticketListenerImpl.onTicketSelected(item)
+            })
         }
     }
 

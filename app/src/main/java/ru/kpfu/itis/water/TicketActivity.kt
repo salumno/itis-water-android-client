@@ -1,14 +1,17 @@
 package ru.kpfu.itis.water
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 
 import kotlinx.android.synthetic.main.activity_ticket.*
 import kotlinx.android.synthetic.main.content_ticket.*
+import ru.kpfu.itis.water.adapters.TicketAdapter
+import ru.kpfu.itis.water.managers.TicketManager
+import ru.kpfu.itis.water.model.ItisWaterTicketItem
 
-class TicketActivity : AppCompatActivity() {
-
+class TicketActivity : AppCompatActivity(), TicketAdapter.onTicketSelectedListener {
     companion object {
         const val USER_ID_KEY = "userId"
     }
@@ -36,6 +39,12 @@ class TicketActivity : AppCompatActivity() {
         requestTickets(userId)
     }
 
+    override fun onTicketSelected(ticketItem: ItisWaterTicketItem) {
+        val intent = Intent(this, SpecificTicketActivity::class.java)
+        intent.putExtra(SpecificTicketActivity.TICKET_ITEM_KEY, ticketItem)
+        startActivity(intent)
+    }
+
     private fun requestTickets(userId: Long) {
         ticketManager.getUserTickets(userId).subscribe(
                 { receivedTickets ->
@@ -49,7 +58,7 @@ class TicketActivity : AppCompatActivity() {
 
     private fun initAdapter() {
         if (ticketList.adapter == null) {
-            ticketList.adapter = TicketAdapter()
+            ticketList.adapter = TicketAdapter(this)
         }
     }
 
