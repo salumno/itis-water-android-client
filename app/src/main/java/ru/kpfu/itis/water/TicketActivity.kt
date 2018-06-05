@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 
 import kotlinx.android.synthetic.main.activity_ticket.*
 import kotlinx.android.synthetic.main.content_ticket.*
@@ -35,6 +36,12 @@ class TicketActivity : AppCompatActivity(), TicketAdapter.onTicketSelectedListen
         }
 
         val userId: Long = savedInstanceState?.getLong(USER_ID_KEY) ?: getUserIdFromIntent()
+
+        ticketList.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+        }
+
         initAdapter()
         requestTickets(userId)
     }

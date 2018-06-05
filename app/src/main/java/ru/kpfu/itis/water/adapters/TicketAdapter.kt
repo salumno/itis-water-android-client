@@ -17,7 +17,7 @@ class TicketAdapter(val ticketListenerImpl: onTicketSelectedListener) : Recycler
         fun onTicketSelected(ticketItem: ItisWaterTicketItem)
     }
 
-    private var items : ArrayList<ItisWaterTicketItem> = ArrayList()
+    private var items: ArrayList<ItisWaterTicketItem> = ArrayList()
 
     inner class TicketViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(parent.inflate(R.layout.ticket_item)) {
         private val text = itemView.ticket_text
