@@ -15,5 +15,21 @@ class ItisWaterTicketDataResponse(
         val id: Long,
         val text: String,
         val status: String,
-        val date: String
+        val date: String,
+        val messages: List<ItisWaterTicketMessageDataResponse>
+)
+
+class ItisWaterTicketMessageDataResponse(
+        val id: Long,
+        val text: String,
+        val date: String,
+        val ticketId: Long,
+        val user: ItisWaterUserResponse
+)
+
+class ItisWaterUserResponse(
+        val id: Long,
+        val name: String,
+        val surname: String,
+        val role: String
 )
