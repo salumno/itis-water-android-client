@@ -20,6 +20,7 @@ fun createIWTicketItemBy(
                 text = ticketResponse.text,
                 status = ticketResponse.status,
                 date = ticketResponse.date,
+                author = createIWUserItemBy(ticketResponse.author),
                 messages = createIWTicketMessageItemsBy(ticketResponse.messages)
         )
 
@@ -32,7 +33,7 @@ fun createIWTicketMessageItemsBy(
                     text = it.text,
                     date = it.date,
                     ticketId = it.ticketId,
-                    user = createIWUserItemBy(it.user)
+                    author = createIWUserItemBy(it.author)
             )
         }
 

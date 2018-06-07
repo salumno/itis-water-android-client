@@ -10,10 +10,14 @@ import rx.Observable
  * Higher School ITIS KFU
  */
 class TicketMessageManager(private val api: RestAPI = RestAPI()) {
-    fun addNewMessage(message: String): Observable<List<ItisWaterTicketMessageItem>> {
+    fun addNewMessage(message: String, userId: Long, ticketId: Long): Observable<List<ItisWaterTicketMessageItem>> {
         return Observable.create {
             subscriber ->
-            val callResponse = api.addTicketMessage(message)
+            val callResponse = api.addTicketMessage(
+                    message = message,
+                    userId = userId,
+                    ticketId = ticketId
+            )
             val response = callResponse.execute()
             if (response.isSuccessful) {
                 val messagesResponse = response.body()
