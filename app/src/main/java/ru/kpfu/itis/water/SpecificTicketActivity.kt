@@ -3,6 +3,7 @@ package ru.kpfu.itis.water
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_specific_ticket.*
 import kotlinx.android.synthetic.main.content_specific_ticket.*
@@ -35,6 +36,7 @@ class SpecificTicketActivity : AppCompatActivity() {
         messagesList.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
+            addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
 
         add_message_button.setOnClickListener {
