@@ -16,6 +16,7 @@ class ItisWaterTicketDataResponse(
         val text: String,
         val status: String,
         val date: String,
+        val author: ItisWaterUserResponse,
         val messages: List<ItisWaterTicketMessageDataResponse>
 )
 
@@ -24,7 +25,7 @@ class ItisWaterTicketMessageDataResponse(
         val text: String,
         val date: String,
         val ticketId: Long,
-        val user: ItisWaterUserResponse
+        val author: ItisWaterUserResponse
 )
 
 class ItisWaterUserResponse(
@@ -33,3 +34,10 @@ class ItisWaterUserResponse(
         val surname: String,
         val role: String
 )
+
+class ItisWaterTicketMessageAddRequest(
+        val message: String,
+        val userId: Long,
+        val ticketId: Long
+)
+

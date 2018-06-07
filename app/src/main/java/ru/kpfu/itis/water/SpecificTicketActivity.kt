@@ -26,12 +26,14 @@ class SpecificTicketActivity : AppCompatActivity() {
         ticketMessagesRecyclerView
     }
 
+    private lateinit var ticket: ItisWaterTicketItem
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_specific_ticket)
         setSupportActionBar(toolbar)
 
-        val ticket: ItisWaterTicketItem = intent.getParcelableExtra(TICKET_ITEM_KEY)
+        ticket = intent.getParcelableExtra(TICKET_ITEM_KEY)
 
         messagesList.apply {
             setHasFixedSize(true)
@@ -63,7 +65,7 @@ class SpecificTicketActivity : AppCompatActivity() {
 
     private fun handleNewMessageButton() {
         val message = new_message_edit_text.text.toString()
-        ticketMessageManager.addNewMessage(message)
+        ticketMessageManager.addNewMessage(message = message, userId = ticket.author.id, ticketId = ticket.id)
                 .subscribeOn(Schedulers.io())
                 .subscribe(
                         { receivedMessages ->

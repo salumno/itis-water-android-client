@@ -10,7 +10,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
  */
 class RestAPI {
 
-    private val baseUrl = ""
+    private val baseUrl = "http://192.168.1.103:8080/"
 
     private val itisWaterApi: ItisWaterApi
 
@@ -28,6 +28,8 @@ class RestAPI {
     fun getUserTickets(userId: Long): Call<ItisWaterTicketResponse> =
             itisWaterApi.getUserTickets(userId)
 
-    fun addTicketMessage(message: String): Call<List<ItisWaterTicketMessageDataResponse>> =
-            itisWaterApi.saveTicketMessage(message)
+    fun addTicketMessage(message: String, userId: Long, ticketId: Long): Call<List<ItisWaterTicketMessageDataResponse>> =
+            itisWaterApi.saveTicketMessage(
+                    ItisWaterTicketMessageAddRequest(message, userId, ticketId)
+            )
 }
