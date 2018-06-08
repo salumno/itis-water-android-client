@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.content_specific_ticket.*
 import ru.kpfu.itis.water.adapters.TicketMessageAdapter
 import ru.kpfu.itis.water.managers.TicketMessageManager
 import ru.kpfu.itis.water.model.ItisWaterTicketItem
+import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
 class SpecificTicketActivity : AppCompatActivity() {
@@ -65,12 +66,13 @@ class SpecificTicketActivity : AppCompatActivity() {
 
     private fun handleNewMessageButton() {
         val message = new_message_edit_text.text.toString()
+        new_message_edit_text.setText("")
         ticketMessageManager.addNewMessage(message = message, userId = ticket.author.id, ticketId = ticket.id)
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { receivedMessages ->
                             (messagesList.adapter as TicketMessageAdapter).addMessages(receivedMessages)
-                            new_message_edit_text.setText("")
                         },
                         { e ->
                             Snackbar.make(messagesList, e.message ?: "" , Snackbar.LENGTH_LONG)

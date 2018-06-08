@@ -41,5 +41,6 @@ class TicketMessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun addMessages(ticketMessages: List<ItisWaterTicketMessageItem>) {
         messages.clear()
         messages.addAll(ticketMessages)
+        notifyDataSetChanged()
     }
 }
