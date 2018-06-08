@@ -13,6 +13,7 @@ data class ItisWaterTicketItem(
         val text: String,
         val status: String,
         val date: String,
+        val author: ItisWaterUserItem,
         val messages: List<ItisWaterTicketMessageItem>
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -20,6 +21,7 @@ data class ItisWaterTicketItem(
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
+            parcel.readParcelable(ItisWaterUserItem::class.java.classLoader),
             parcel.createTypedArrayList(ItisWaterTicketMessageItem))
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -27,15 +29,22 @@ data class ItisWaterTicketItem(
         parcel.writeString(text)
         parcel.writeString(status)
         parcel.writeString(date)
+        parcel.writeParcelable(author, flags)
         parcel.writeTypedList(messages)
     }
 
-    override fun describeContents() = 0
+    override fun describeContents(): Int {
+        return 0
+    }
 
     companion object CREATOR : Parcelable.Creator<ItisWaterTicketItem> {
-        override fun createFromParcel(parcel: Parcel): ItisWaterTicketItem = ItisWaterTicketItem(parcel)
+        override fun createFromParcel(parcel: Parcel): ItisWaterTicketItem {
+            return ItisWaterTicketItem(parcel)
+        }
 
-        override fun newArray(size: Int): Array<ItisWaterTicketItem?> = arrayOfNulls(size)
+        override fun newArray(size: Int): Array<ItisWaterTicketItem?> {
+            return arrayOfNulls(size)
+        }
     }
 }
 
@@ -44,7 +53,7 @@ data class ItisWaterTicketMessageItem(
         val text: String,
         val date: String,
         val ticketId: Long,
-        val user: ItisWaterUserItem
+        val author: ItisWaterUserItem
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readLong(),
@@ -58,7 +67,7 @@ data class ItisWaterTicketMessageItem(
         parcel.writeString(text)
         parcel.writeString(date)
         parcel.writeLong(ticketId)
-        parcel.writeParcelable(user, flags)
+        parcel.writeParcelable(author, flags)
     }
 
     override fun describeContents() = 0

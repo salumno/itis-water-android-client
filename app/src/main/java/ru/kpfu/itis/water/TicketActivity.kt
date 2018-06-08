@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 
 import kotlinx.android.synthetic.main.activity_ticket.*
@@ -11,6 +12,7 @@ import kotlinx.android.synthetic.main.content_ticket.*
 import ru.kpfu.itis.water.adapters.TicketAdapter
 import ru.kpfu.itis.water.managers.TicketManager
 import ru.kpfu.itis.water.model.ItisWaterTicketItem
+import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
 class TicketActivity : AppCompatActivity(), TicketAdapter.onTicketSelectedListener {
@@ -36,6 +38,7 @@ class TicketActivity : AppCompatActivity(), TicketAdapter.onTicketSelectedListen
         ticketList.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
+            addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
 
         initAdapter()
@@ -51,6 +54,7 @@ class TicketActivity : AppCompatActivity(), TicketAdapter.onTicketSelectedListen
     private fun requestTickets(userId: Long) {
         ticketManager.getUserTickets(userId)
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { receivedTickets ->
                         (ticketList.adapter as TicketAdapter).addTickets(receivedTickets)

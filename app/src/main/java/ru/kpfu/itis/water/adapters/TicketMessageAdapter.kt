@@ -23,8 +23,8 @@ class TicketMessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val date = itemView.message_date
 
         fun bind(messageItem: ItisWaterTicketMessageItem) {
-            userName.text = messageItem.user.name
-            userSurname.text = messageItem.user.surname
+            userName.text = messageItem.author.name
+            userSurname.text = messageItem.author.surname
             text.text = messageItem.text
             date.text = messageItem.date
         }
@@ -41,5 +41,6 @@ class TicketMessageAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun addMessages(ticketMessages: List<ItisWaterTicketMessageItem>) {
         messages.clear()
         messages.addAll(ticketMessages)
+        notifyDataSetChanged()
     }
 }

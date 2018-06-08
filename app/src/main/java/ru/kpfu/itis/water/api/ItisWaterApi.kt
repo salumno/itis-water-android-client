@@ -12,12 +12,12 @@ import retrofit2.http.Query
  */
 interface ItisWaterApi {
 
-    @POST("/client/login")
+    @POST("client/login")
     fun login(@Body userData: ItisWaterLoginRequest): Call<ItisWaterLoginResponse>
 
-    @GET("/client/tickets")
+    @GET("client/tickets")
     fun getUserTickets(@Query("userId") userId: Long): Call<ItisWaterTicketResponse>
 
-    @POST("/client/tickets/message")
-    fun saveTicketMessage(@Body message: String): Call<List<ItisWaterTicketMessageDataResponse>>
+    @POST("client/tickets/message")
+    fun saveTicketMessage(@Body messageData: ItisWaterTicketMessageAddRequest): Call<List<ItisWaterTicketMessageDataResponse>>
 }
