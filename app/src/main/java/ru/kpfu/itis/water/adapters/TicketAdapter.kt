@@ -46,5 +46,6 @@ class TicketAdapter(val ticketListenerImpl: onTicketSelectedListener) : Recycler
     fun addTickets(tickets: List<ItisWaterTicketItem>) {
         items.clear()
         items.addAll(tickets)
+        notifyDataSetChanged()
     }
 }

@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.content_ticket.*
 import ru.kpfu.itis.water.adapters.TicketAdapter
 import ru.kpfu.itis.water.managers.TicketManager
 import ru.kpfu.itis.water.model.ItisWaterTicketItem
+import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
 class TicketActivity : AppCompatActivity(), TicketAdapter.onTicketSelectedListener {
@@ -53,6 +54,7 @@ class TicketActivity : AppCompatActivity(), TicketAdapter.onTicketSelectedListen
     private fun requestTickets(userId: Long) {
         ticketManager.getUserTickets(userId)
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                     { receivedTickets ->
                         (ticketList.adapter as TicketAdapter).addTickets(receivedTickets)
